@@ -1,3 +1,6 @@
+import random
+
+
 print('''
   ____________________________________________________________________
  / \-----     ---------  -----------     -------------- ------    ----\
@@ -28,6 +31,15 @@ print('''
 print("Welcome to Treasure Island.")
 print("Your mission is to find the treasure.") 
 
+def made_it_to_shore ():
+    print("You've made it to shore.")
+    print("There is a cave to your left and a hostile clan coming at you on your right.")
+    caveOrFight = input("Which direction do you go? 'Left' or 'Right' \n")
+    if caveOrFight == 'Left':
+        print_treasure()
+    else:
+        print("Sorry, you dead! Game Over!")
+
 def print_treasure ():
     print('''
     Congratulations! You found the gold!
@@ -56,29 +68,31 @@ def print_treasure ():
 reachedWater = input("You've reached water, how do you cross it? 'Boat', 'Bridge' or 'Swim' \n")
 
 if reachedWater == "Swim":
-  print("You were eaten by sharks, Game Over!")
+    chanceOfSuccess = round(random.random() * 3)
+    if chanceOfSuccess > 0:
+        print("You were eaten by sharks, Game Over!")
+    else:
+        made_it_to_shore()
 
 if reachedWater == "Bridge":
-  print("The Bridge is not stable and collapses")
-  whereToSwim = input("What do you do? Swim to Boat and commandeer it 'A', or Swim to shore 'B' \n")
+    print("The Bridge is not stable and collapses")
+    chanceOfSuccess = round(random.random() * 3)
+    whereToSwim = input("What do you do? Swim to Boat and commandeer it 'A', or Swim to shore 'B' \n")
 
-  if whereToSwim == "B":
-    print('You were eaten by sharks, Game Over!')
-  else:
-    print("You've taken control of the boat and made it to shore.")
-    print("There is a cave to your left and a hostile clan coming at you on your right.")
-    caveOrFight = input("Which direction do you go? 'Left' or 'Right' \n")
-    if caveOrFight == 'Left':
-        print_treasure()
+    if whereToSwim == "B" and chanceOfSuccess == 3:
+        print('You were eaten by sharks, Game Over!')
+    elif whereToSwim == "A" and chanceOfSuccess >= 2:
+        print("You've taken control of the boat and made it to shore.")
+        print("There is a cave to your left and a hostile clan coming at you on your right.")
+        caveOrFight = input("Which direction do you go? 'Left' or 'Right' \n")
+        if caveOrFight == 'Left':
+            print_treasure()
+        else:
+            print("Sorry, you're dead! Game Over!")
     else:
-      print("Sorry, you're dead! Game Over!")
+        print('You were eaten by sharks, Game Over!')
     
 
 if reachedWater == "Boat":
-  print("You've taken control of the boat and made it to shore.")
-  print("There is a cave to your left and a hostile clan coming at you on your right.")
-  caveOrFight = input("Which direction do you go? 'Left' or 'Right' \n")
-  if caveOrFight == 'Left':
-    print_treasure()
-  else:
-    print("Sorry, you dead! Game Over!")
+    print("You've taken control of the boat.")
+    made_it_to_shore()
